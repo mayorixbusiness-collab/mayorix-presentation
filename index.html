@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mayorix Business Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* 1. SETUP & CORE DESIGN */
         :root {
             --bg-dark: #060709;
             --card-bg: rgba(31, 40, 51, 0.4);
@@ -21,27 +25,26 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            user-select: none;
         }
 
         body {
-            font-family: 'Assistant', 'Heebo', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            overflow: hidden;
+            font-family: 'Assistant', sans-serif;
             height: 100vh;
             width: 100vw;
+            overflow: hidden;
+            cursor: pointer;
         }
 
-        /* Presentation Wrapper */
-        .presentation-container {
+        /* 2. SLIDE CONTAINER SYSTEM */
+        .presentation-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
         }
 
-        /* Slide Core Layout */
-        .slide {
+        .slide-container {
             position: absolute;
             top: 0;
             left: 0;
@@ -51,58 +54,45 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            padding: 60px;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
+            transition: opacity 0.8s ease, visibility 0.8s;
             background-color: var(--bg-dark);
         }
 
-        .slide.active {
+        .slide-container.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .container {
-            max-width: 1300px;
-            width: 100%;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        /* Background Light Orbs */
-        .slide::before {
+        /* Background effects */
+        .slide-container::before {
             content: '';
             position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0, 210, 255, 0.08) 0%, rgba(0,0,0,0) 70%);
-            top: 5%;
-            left: 5%;
-            z-index: 0;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.05) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
             pointer-events: none;
         }
 
-        .slide::after {
+        .slide-container::after {
             content: '';
             position: absolute;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.05) 0%, rgba(0,0,0,0) 70%);
-            bottom: 5%;
-            right: 5%;
-            z-index: 0;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.04) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
             pointer-events: none;
         }
 
-        .container * {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Typography - ENLARGED FOR HIGH READABILITY */
+        /* 3. TYPOGRAPHY (ENLARGED) */
         h1, h2, h3 {
             font-family: 'Heebo', sans-serif;
+            line-height: 1.1;
         }
 
         .gradient-text {
@@ -113,583 +103,359 @@
         }
 
         .slide-title {
-            font-size: 3.8rem; /* מוגדל */
-            margin-bottom: 60px;
-            letter-spacing: -0.5px;
+            font-size: 80px;
+            margin-bottom: 40px;
+            text-align: center;
+            width: 100%;
         }
 
         .slide-title span {
-            border-bottom: 4px solid var(--accent-cyan);
-            padding-bottom: 12px;
+            border-bottom: 6px solid var(--accent-cyan);
+            padding-bottom: 10px;
         }
 
-        /* Slide 1 - Hero */
-        .hero-title {
-            font-size: 7rem; /* מוגדל משמעותית */
-            letter-spacing: -1px;
-            margin-bottom: 25px;
-        }
-
-        .hero-subtitle {
-            font-size: 3rem; /* מוגדל */
-            font-weight: 300;
-            color: var(--text-main);
-            margin-bottom: 50px;
-            opacity: 0.9;
-        }
-
-        .hero-subtitle span {
-            color: var(--accent-cyan);
-            font-weight: 600;
-        }
-
-        .hero-tagline {
-            font-size: 2.2rem; /* מוגדל */
+        p, li {
+            font-size: 28px;
+            line-height: 1.5;
             color: var(--text-muted);
-            font-weight: 400;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            padding-top: 25px;
-            display: inline-block;
-            letter-spacing: 1px;
         }
 
-        /* Slide 2 - Challenges Grid */
-        .challenges-grid {
+        /* 4. LAYOUTS & COMPONENTS */
+        .hero-title {
+            font-size: 140px;
+            margin-bottom: 20px;
+        }
+        .hero-subtitle {
+            font-size: 45px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+        .hero-subtitle b {
+            color: var(--accent-cyan);
+        }
+
+        .content-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 35px;
-            max-width: 1100px;
-            margin: 0 auto;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
         }
 
-        .challenge-card {
+        .premium-card {
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
-            padding: 45px;
-            border-radius: 20px;
-            text-align: right;
+            padding: 50px;
+            border-radius: 30px;
             backdrop-filter: blur(10px);
             transition: transform 0.3s ease;
+            text-align: right;
         }
 
-        .challenge-card:hover {
-            transform: translateY(-5px);
+        .premium-card:hover {
+            transform: translateY(-10px);
             border-color: var(--accent-purple);
         }
 
-        .challenge-icon {
-            font-size: 2.8rem; /* מוגדל */
-            margin-bottom: 20px;
-            color: var(--accent-purple);
-        }
-
-        .challenge-card h3 {
-            font-size: 1.9rem; /* מוגדל */
-            margin-bottom: 15px;
-            color: var(--text-main);
-        }
-
-        .challenge-card p {
-            font-size: 1.4rem; /* מוגדל לקריאות מירבית */
-            color: var(--text-muted);
-            line-height: 2.1rem;
-        }
-
-        /* Slide 3 - Value Proposition */
-        .solution-wrapper {
-            background: linear-gradient(180deg, rgba(31, 40, 51, 0.2) 0%, rgba(6, 7, 9, 0.8) 100%);
-            border: 1px solid rgba(0, 210, 255, 0.25);
-            border-radius: 24px;
-            padding: 70px 50px;
-            max-width: 1100px;
-            margin: 0 auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            backdrop-filter: blur(20px);
-        }
-
-        .solution-headline {
-            font-size: 2.8rem; /* מוגדל */
-            line-height: 4.2rem;
-            font-weight: 600;
-        }
-
-        .solution-highlight {
+        .card-icon {
+            font-size: 50px;
             color: var(--accent-cyan);
-            font-weight: 700;
+            margin-bottom: 20px;
         }
 
-        /* Slide 4 - Pipeline Workflow */
-        .pipeline-container {
+        .card-title {
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .pipeline {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            width: 100%;
+            max-width: 1300px;
             position: relative;
-            max-width: 1250px;
-            margin: 50px auto 0 auto;
-            padding: 0 20px;
+            margin-top: 50px;
         }
 
-        .pipeline-container::before {
+        .pipeline::before {
             content: '';
             position: absolute;
-            top: 55px;
-            left: 60px;
-            right: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+            top: 45px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
             z-index: 0;
         }
 
-        .pipeline-step {
-            flex: 1;
-            background: #0f131a;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 35px 25px;
-            margin: 0 15px;
-            border-radius: 20px;
+        .step {
+            position: relative;
             z-index: 1;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            transition: all 0.3s ease;
+            width: 22%;
+            background: #0f131a;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
         }
 
-        .pipeline-step:hover {
-            border-color: var(--accent-cyan);
-            transform: translateY(-5px);
-        }
-
-        .step-badge {
-            width: 50px; /* מוגדל */
-            height: 50px;
+        .step-num {
+            width: 60px;
+            height: 60px;
             background: var(--gradient-primary);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: 700;
-            font-size: 1.4rem;
-            margin: 0 auto 25px auto;
-            color: #000;
-        }
-
-        .pipeline-step h3 {
-            font-size: 1.6rem; /* מוגדל */
-            color: var(--accent-cyan);
-            margin-bottom: 15px;
-        }
-
-        .pipeline-step p {
-            font-size: 1.2rem; /* מוגדל */
-            color: var(--text-muted);
-            line-height: 1.8rem;
-        }
-
-        /* Slide 5 - Core Tech Grid */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 35px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .tech-card {
-            background: linear-gradient(180deg, rgba(20, 27, 35, 0.6) 0%, rgba(6, 7, 9, 0.9) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            padding: 55px 35px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .tech-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 20px 40px rgba(0, 210, 255, 0.1);
-        }
-
-        .tech-icon {
-            font-size: 3.8rem; /* מוגדל */
-            margin-bottom: 30px;
-            display: inline-block;
-        }
-
-        .tech-card h3 {
-            font-size: 2rem; /* מוגדל */
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .tech-card p {
-            font-size: 1.3rem; /* מוגדל */
-            color: var(--text-muted);
-            line-height: 1.9rem;
-        }
-
-        /* Slide 6 - Trust Blocks */
-        .trust-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 35px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .trust-block {
-            background: rgba(255, 255, 255, 0.02);
-            border-right: 5px solid var(--accent-cyan);
-            padding: 40px 45px;
-            border-radius: 0 20px 20px 0;
-            font-size: 1.8rem; /* מוגדל משמעותית */
-            font-weight: 600;
-            text-align: right;
-            backdrop-filter: blur(5px);
-            line-height: 2.6rem;
-        }
-
-        /* Slide 7 - Strategic Roadmap */
-        .roadmap-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: right;
-        }
-
-        .roadmap-row {
-            display: flex;
-            align-items: center;
-            background: rgba(31, 40, 51, 0.2);
-            border: 1px solid rgba(255,255,255,0.03);
-            padding: 35px;
-            border-radius: 20px;
-        }
-
-        .roadmap-number {
-            font-size: 3.8rem; /* מוגדל */
+            font-size: 30px;
             font-weight: 900;
-            color: var(--accent-purple);
-            margin-left: 45px;
-            font-family: 'Heebo', sans-serif;
-            min-width: 80px;
+            color: #000;
+            margin: -60px auto 20px;
+            border: 5px solid var(--bg-dark);
         }
 
-        .roadmap-content h3 {
-            font-size: 1.9rem; /* מוגדל */
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .roadmap-content p {
-            font-size: 1.4rem; /* מוגדל */
-            color: var(--text-muted);
-        }
-
-        /* Slide 8 - Closing & QR */
-        .closing-layout {
+        .qr-section {
             display: flex;
-            justify-content: space-around;
             align-items: center;
-            max-width: 1050px;
-            margin: 50px auto 0 auto;
-            gap: 60px;
+            gap: 80px;
+            margin-top: 40px;
         }
 
-        .closing-info {
-            text-align: right;
-            font-size: 1.9rem; /* מוגדל משמעותית */
-            line-height: 3rem;
-        }
-
-        .closing-info p {
-            margin-bottom: 25px;
-        }
-
-        .closing-info strong {
-            color: var(--accent-cyan);
-        }
-
-        .qr-wrapper {
+        .qr-box {
             background: #fff;
-            padding: 20px;
-            border-radius: 24px;
-            box-shadow: 0 0 40px rgba(0, 210, 255, 0.25);
-            display: inline-block;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
         }
 
-        .qr-wrapper img {
-            width: 240px; /* מוגדל לסריקה נוחה מרחוק */
-            height: 240px;
+        .qr-box img {
+            width: 300px;
+            height: 300px;
             display: block;
         }
 
-        .qr-text {
-            font-size: 1.3rem; /* מוגדל */
-            color: var(--text-muted);
-            margin-top: 20px;
-            font-weight: 400;
+        .contact-info {
+            text-align: right;
         }
 
-        .final-headline {
-            font-size: 3rem; /* מוגדל */
-            margin-top: 70px;
-            letter-spacing: 1px;
+        .contact-item {
+            font-size: 38px;
+            margin-bottom: 30px;
+            color: #fff;
         }
 
-        /* Visual Progress Dot Indicator */
-        .progress-dots {
+        .contact-item i {
+            color: var(--accent-cyan);
+            margin-left: 20px;
+        }
+
+        /* 5. NAVIGATION DOTS */
+        .nav-dots {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 12px;
-            z-index: 100;
+            gap: 15px;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.2);
             transition: all 0.3s ease;
         }
 
         .dot.active {
             background: var(--accent-cyan);
-            width: 24px;
-            border-radius: 4px;
+            width: 40px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="presentation-container" id="presentation">
-
-        <!-- שקופית 1 -->
-        <section class="slide active">
-            <div class="container">
-                <h1 class="hero-title gradient-text">Mayorix</h1>
-                <div class="hero-subtitle">פיתוח אתרים | מערכות אוטומציה | <span>סוכני AI לעסקים</span></div>
-                <div class="hero-tagline">מקסימום תוצאות ולקוחות. מינימום עבודה ידנית.</div>
-            </div>
-        </section>
-
-        <!-- שקופית 2 -->
-        <section class="slide">
-            <div class="container">
-                <h2 class="slide-title"><span>הכאב של השוק: האתגר הדיגיטלי</span></h2>
-                <div class="challenges-grid">
-                    <div class="challenge-card">
-                        <div class="challenge-icon">⏳</div>
-                        <h3>צפי למענה מיידי (Instant response)</h3>
-                        <p>הלקוח המודרני לא מחכה. פנייה שלא מקבלת מענה תוך 5 דקות עוברת ישירות למתחרה הבא.</p>
-                    </div>
-                    <div class="challenge-card">
-                        <div class="challenge-icon">🌙</div>
-                        <h3>איבוד לידים מחוץ לשעות הפעילות</h3>
-                        <p>עשרות פניות מגיעות בערבים ובסופי שבוע, כשהעסק סגור. אלו הזדמנויות הכנסה ישרות שנזרקות לפח.</p>
-                    </div>
-                    <div class="challenge-card">
-                        <div class="challenge-icon">🔄</div>
-                        <h3>בזבוז זמן על שאלות חוזרות</h3>
-                        <p>צוותי מכירות ושירות שורפים שעות יקרות מדי יום במענה על שאלות קבועות, במקום לסגור עסקאות גדולות.</p>
-                    </div>
-                    <div class="challenge-card">
-                        <div class="challenge-icon">📉</div>
-                        <h3>חוסר מעקב ופילוח</h3>
-                        <p>מידע על מתעניינים הולך לאיבוד בוואטסאפ או במחברות, ללא תהליך מסודר של איסוף וסינון לידים.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- שקופית 3 -->
-        <section class="slide">
-            <div class="container">
-                <h2 class="slide-title"><span>הפתרון: סוכן אוטונומי שעובד בשבילכם</span></h2>
-                <div class="solution-wrapper">
-                    <div class="solution-headline">
-                        אנחנו מקימים עבורכם <span class="solution-highlight">נציג דיגיטלי חכם מבוסס AI</span>, המעניק שירות ומכירות <span class="solution-highlight">24/7/365</span>. 
-                        <br><br>
-                        הסוכן מנהל שיחות אנושיות לחלוטין, מציג קטלוגים, פותר התנגדויות, מסנן מתעניינים וקובע פגישות ישירות ליומן שלכם – ללא מגע יד אדם.
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- שקופית 4 - איך זה עובד -->
-        <section class="slide">
-            <div class="container">
-                <h2 class="slide-title"><span>ארכיטקטורת המערכת: איך זה עובד?</span></h2>
-                <div class="pipeline-container">
-                    <div class="pipeline-step">
-                        <div class="step-badge">1</div>
-                        <h3>תנועה לעסק</h3>
-                        <p>לקוח פוטנציאלי מגיע לנכס הדיגיטלי של החברה (אתר/מערכת).</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <div class="step-badge">2</div>
-                        <h3>מענה ותשאול</h3>
-                        <p>הסוכן החכם נכנס לפעולה מיד, מזהה את צורך הלקוח ומנהל שיחה ממוקדת.</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <div class="step-badge">3</div>
-                        <h3>טיוב ואיסוף</h3>
-                        <p>ה-AI אוסף נתונים, מפלטר לקוחות לא רלוונטיים ומחלץ פרטי קשר מלאים.</p>
-                    </div>
-                    <div class="pipeline-step">
-                        <div class="step-badge">4</div>
-                        <h3>סגירה ואוטומציה</h3>
-                        <p>הפגישה נקבעת ביומן, והליד המבושל מוזרם ישירות למערכות בעל העסק.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- שקופית 5 -->
-        <section class="slide">
-            <div class="container">
-                <h2 class="slide-title"><span>סל השירותים המקצועי של Mayorix</span></h2>
-                <div class="tech-grid">
-                    <div class="tech-card">
-                        <div class="tech-icon">🧠</div>
-                        <h3>סוכני AI ומכירות</h3>
-                        <p>פיתוח ואימון מודלי שפה מותאמים אישית לעסק שלכם, למענה מדויק ואיסוף מידע חכם בזמן אמת.</p>
-                    </div>
-                    <div class="tech-card">
-                        <div class="tech-icon">💻</div>
-                        <h3>אתרי פרימיום</h3>
-                        <p>בניית אתרי תדמית ודפי נחיתה יוקרתיים, בעלי חווית משתמש מתקדמת שנועדו להמרה מקסימלית של מתעניינים.</p>
-                    </div>
-                    <div class="tech-card">
-                        <div class="tech-icon">⚡</div>
-                        <h3>אוטומציות אינטגרטיביות</h3>
-                        <p>חיבור בין מערכות ה-CRM, ה-WhatsApp והיומנים שלכם, ליצירת סביבת עבודה עצמאית שחוסכת שעות עבודה.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- שקופית 6 -->
-        <section class="slide">
-            <div class="container">
-                <h2 class="slide-title"><span>למה חברות בוחרות ב-Mayorix?</span></h2>
-                <div class="trust-grid">
-                    <div class="trust-block">💎 חדשנות טכנולוגית בחזית השוק - שימוש במודלים המובילים בעולם.</div>
-                    <div class="trust-block">🎯 אפיון אישי ומדויק - פתרונות התפורים בדיוק לצווארי הבקבוק שלכם.</div>
-                    <div class="trust-block">🤝 ליווי מקיף מאפס - משלב התכנון האסטרטגי ועד להטמעה מלאה בארגון.</div>
-                    <div class="trust-block">🚀 שיפור ROI מיידי - הגדלת כמות הפניות וצמצום משמעותי של הוצאות כוח האדם.</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- שקופית 7 -->
-        <section class="slide">
-            <div class="container">
-                <h2 class="slide-title"><span>מפת הדרכים לשותפות אסטרטגית</span></h2>
-                <div class="roadmap-container">
-                    <div class="roadmap-row">
-                        <div class="roadmap-number">01</div>
-                        <div class="roadmap-content">
-                            <h3>פגישת פיצוח ואפיון</h3>
-                            <p>מיפוי הצרכים, ניתוח קהל היעד והגדרת יעדים怸סקיים ומדידים להצלחת הפרויקט.</p>
-                        </div>
-                    </div>
-                    <div class="roadmap-row">
-                        <div class="roadmap-number">02</div>
-                        <div class="roadmap-content">
-                            <h3>ארכיטקטורה ופיתוח</h3>
-                            <p>עיצוב ממשק האתר, כתיבת הקוד ואימון סוכן ה-AI על בסיס הידע הארגוני של החברה שלכם.</p>
-                        </div>
-                    </div>
-                    <div class="roadmap-row">
-                        <div class="roadmap-number">03</div>
-                        <div class="roadmap-content">
-                            <h3>בדיקות QA והשקה</h3>
-                            <p>הרצת סימולציות מקיפות לבחינת דיוק ה-AI, חיבור האוטומציות והעלאת המערכת לאוויר ברשת.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- שקופית 8 -->
-        <section class="slide">
-            <div class="container">
-                <h2 class="gradient-text" style="font-size: 4.5rem; margin-bottom: 20px;">Mayorix</h2>
-                
-                <div class="closing-layout">
-                    <div class="closing-info">
-                        <p>📞 <strong>טלפון ישיר:</strong> 053-9360150</p>
-                        <p>✉️ <strong>דואר אלקטרוני:</strong> mayorixbusiness@gmail.com</p>
-                    </div>
-                    <div style="text-align: center;">
-                        <div class="qr-wrapper">
-                            <!-- מקושר כעת רשמית לקובץ frame (2).png שמפנה לאתר שלכם -->
-                            <img src="frame (2).png" alt="Scan QR Code">
-                        </div>
-                        <div class="qr-text">סרקו למעבר לאתר החברה</div>
-                    </div>
-                </div>
-                
-                <div class="final-headline gradient-text">יותר לקוחות. פחות עבודה.</div>
-            </div>
-        </section>
-
-        <!-- Progress Indicator Dots -->
-        <div class="progress-dots" id="dots-container"></div>
+<div class="presentation-wrapper" id="presentation">
+    
+    <div class="slide-container active" id="slide1">
+        <h1 class="hero-title gradient-text">Mayorix</h1>
+        <p class="hero-subtitle">פיתוח אתרים | אוטומציות | <b>סוכני AI לעסקים</b></p>
+        <p style="font-size: 35px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            הופכים טכנולוגיה לרווח נקי.
+        </p>
     </div>
 
-    <script>
-        const slides = document.querySelectorAll('.slide');
-        const dotsContainer = document.getElementById('dots-container');
-        let currentSlideIndex = 0;
+    <div class="slide-container" id="slide2">
+        <h2 class="slide-title"><span>למה עסקים מאבדים לקוחות?</span></h2>
+        <div class="content-grid">
+            <div class="premium-card">
+                <div class="card-icon"><i class="fas fa-clock"></i></div>
+                <div class="card-title">חוסר מענה מיידי</div>
+                <p>לקוח שלא קיבל תשובה תוך 5 דקות - עובר למתחרה הבא.</p>
+            </div>
+            <div class="premium-card">
+                <div class="card-icon"><i class="fas fa-moon"></i></div>
+                <div class="card-title">פעילות מוגבלת</div>
+                <p>העסק סגור בלילה ובסופ"ש? עשרות לידים פשוט נזרקים לפח.</p>
+            </div>
+            <div class="premium-card">
+                <div class="card-icon"><i class="fas fa-users-slash"></i></div>
+                <div class="card-title">בזבוז זמן על שירות</div>
+                <p>הצוות עונה על אותן שאלות שוב ושוב במקום לסגור עסקאות.</p>
+            </div>
+            <div class="premium-card">
+                <div class="card-icon"><i class="fas fa-chart-line-down"></i></div>
+                <div class="card-title">לידים לא מבושלים</div>
+                <p>זמן יקר מתבזבז על שיחות עם אנשים שכלל לא רלוונטיים.</p>
+            </div>
+        </div>
+    </div>
 
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if(index === 0) dot.classList.add('active');
-            dotsContainer.appendChild(dot);
-        });
-        const dots = document.querySelectorAll('.dot');
+    <div class="slide-container" id="slide3">
+        <h2 class="slide-title"><span>הפתרון: סוכן אוטונומי 24/7</span></h2>
+        <div style="max-width: 1000px; text-align: center; background: rgba(0,210,255,0.05); padding: 60px; border-radius: 40px; border: 1px solid var(--border-glow);">
+            <p style="font-size: 45px; color: #fff; line-height: 1.3;">
+                אנחנו בונים עבורכם <b style="color: var(--accent-cyan);">נציג מכירות חכם</b> שעובד מסביב לשעון. 
+                <br><br>
+                הוא מנהל שיחות אנושיות, עונה על שאלות, מסנן מתעניינים וקובע לכם פגישות ישירות ביומן.
+            </p>
+        </div>
+    </div>
 
-        function updateSlides(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
+    <div class="slide-container" id="slide4">
+        <h2 class="slide-title"><span>איך זה עובד? (התהליך)</span></h2>
+        <div class="pipeline">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3 class="card-title">כניסת ליד</h3>
+                <p>לקוח פונה באתר או בוואטסאפ.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3 class="card-title">שיחת AI</h3>
+                <p>הסוכן עונה מיד ומנתח את הצורך.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3 class="card-title">סינון וטיוב</h3>
+                <p>ה-AI מוודא שמדובר בלקוח רציני.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h3 class="card-title">סגירת פגישה</h3>
+                <p>הפרטים נשלחים אליכם ל-CRM.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide5">
+        <h2 class="slide-title"><span>מה אנחנו עושים ב-Mayorix?</span></h2>
+        <div class="content-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1400px;">
+            <div class="premium-card">
+                <div class="card-icon"><i class="fas fa-robot"></i></div>
+                <div class="card-title">סוכני AI</div>
+                <p>נציגי מכירות ושירות חכמים לכל פלטפורמה.</p>
+            </div>
+            <div class="premium-card">
+                <div class="card-icon"><i class="fas fa-code"></i></div>
+                <div class="card-title">אתרי פרימיום</div>
+                <p>דפי נחיתה ואתרים ממותגים להמרה גבוהה.</p>
+            </div>
+            <div class="premium-card">
+                <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                <div class="card-title">אוטומציות</div>
+                <p>חיבור מערכות חכם שחוסך לכם שעות עבודה.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide6">
+        <h2 class="slide-title"><span>הערך המוסף שלנו</span></h2>
+        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 900px;">
+            <div class="premium-card" style="display: flex; align-items: center; padding: 30px;">
+                <i class="fas fa-check-circle" style="font-size: 40px; color: var(--accent-cyan); margin-left: 30px;"></i>
+                <div style="font-size: 32px; font-weight: 700;">זמינות מלאה 24/7 ללקוחות שלכם</div>
+            </div>
+            <div class="premium-card" style="display: flex; align-items: center; padding: 30px;">
+                <i class="fas fa-check-circle" style="font-size: 40px; color: var(--accent-cyan); margin-left: 30px;"></i>
+                <div style="font-size: 32px; font-weight: 700;">הקטנה דרמטית של עלויות כוח אדם</div>
+            </div>
+            <div class="premium-card" style="display: flex; align-items: center; padding: 30px;">
+                <i class="fas fa-check-circle" style="font-size: 40px; color: var(--accent-cyan); margin-left: 30px;"></i>
+                <div style="font-size: 32px; font-weight: 700;">שיפור מיידי ביחס ההמרה של לידים</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide7">
+        <h1 class="gradient-text" style="font-size: 100px; margin-bottom: 10px;">Mayorix</h1>
+        <div class="qr-section">
+            <div class="contact-info">
+                <div class="contact-item"><i class="fas fa-phone"></i> 053-9360150</div>
+                <div class="contact-item"><i class="fas fa-envelope"></i> mayorixbusiness@gmail.com</div>
+                <p style="font-size: 35px; color: var(--accent-cyan); font-weight: 700; margin-top: 40px;">
+                    בואו נבנה את העתיד שלכם.
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <div class="qr-box">
+                    <img src="qr.png" alt="Scan to visit our site">
+                </div>
+                <p style="margin-top: 20px; font-size: 24px;">סרקו למעבר לאתר החברה</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-dots" id="dots"></div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide-container');
+    const dotsContainer = document.getElementById('dots');
+    let currentSlide = 0;
+
+    // יצירת נקודות ניווט בתחתית
+    slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dotsContainer.appendChild(dot);
+    });
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // הקשבה למקלדת (Enter, רווח, חצים)
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowLeft') nextSlide();
+        if (e.key === 'ArrowRight') prevSlide();
+    });
+
+    // הקשבה לקליק בעכבר (בכל מקום חוץ מעל התמונה)
+    window.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'IMG' && e.target.tagName !== 'A') {
+            nextSlide();
         }
+    });
+</script>
 
-        function nextSlide() {
-            if (currentSlideIndex < slides.length - 1) {
-                currentSlideIndex++;
-                updateSlides(currentSlideIndex);
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlideIndex > 0) {
-                currentSlideIndex--;
-                updateSlides(currentSlideIndex);
-            }
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowLeft') {
-                e.preventDefault();
-                nextSlide();
-            } else if (e.key === 'ArrowRight') {
-                e.preventDefault();
-                prevSlide();
-            }
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'A' && e.target.tagName !== 'IMG') {
-                nextSlide();
-            }
-        });
-    </script>
 </body>
 </html>
