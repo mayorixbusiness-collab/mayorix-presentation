@@ -230,7 +230,6 @@
             padding: 0 20px;
         }
 
-        /* הלקוח רואה קו שמחבר בין הקוביות */
         .pipeline-container::before {
             content: '';
             position: absolute;
@@ -420,7 +419,7 @@
             color: var(--accent-cyan);
         }
 
-        /* ה-QR שביקשת בעיצוב יוקרתי */
+        /* מציג בדיוק את קובץ התמונה שהעלית */
         .qr-wrapper {
             background: #fff;
             padding: 15px;
@@ -448,7 +447,7 @@
             letter-spacing: 1px;
         }
 
-        /* Visual Progress Dot Indicator (פינת המסך) */
+        /* Visual Progress Dot Indicator */
         .progress-dots {
             position: absolute;
             bottom: 30px;
@@ -530,7 +529,7 @@
             </div>
         </section>
 
-        <!-- שקופית 4 - איך זה עובד (משודרג) -->
+        <!-- שקופית 4 - איך זה עובד -->
         <section class="slide">
             <div class="container">
                 <h2 class="slide-title"><span>ארכיטקטורת המערכת: איך זה עובד?</span></h2>
@@ -638,8 +637,8 @@
                     </div>
                     <div style="text-align: center;">
                         <div class="qr-wrapper">
-                            <!-- כאן מוטמע קובץ ה-QR שהעלית בשאלה -->
-                            <img src="frame (1).png" alt="Scan QR Code" id="qr-img">
+                            <!-- מציג בדיוק את תמונת ה-QR המקורית שהעלית שמפנה לאתר שלכם -->
+                            <img src="frame (1).png" alt="Scan QR Code">
                         </div>
                         <div class="qr-text">סרקו למעבר לאתר החברה</div>
                     </div>
@@ -654,9 +653,7 @@
     </div>
 
     <script>
-        // ניהול המצגת ומעברי השקופיות
         const slides = document.querySelectorAll('.slide');
-        const container = document.getElementById('presentation');
         const dotsContainer = document.getElementById('dots-container');
         let currentSlideIndex = 0;
 
@@ -691,7 +688,7 @@
             }
         }
 
-        // האזנה למקלדת (Enter, רווח, חיצים)
+        // ניווט במקלדת (Enter, Space, חץ שמאלה)
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowLeft') {
                 e.preventDefault();
@@ -702,19 +699,12 @@
             }
         });
 
-        // האזנה לקליק שמאלי בעכבר להעברת שקופית (כמו בפאורפוינט)
+        // ניווט בלחיצת עכבר
         window.addEventListener('click', (e) => {
-            // מוודא שלא לחצנו בטעות על תמונה או קישור
             if (e.target.tagName !== 'A' && e.target.tagName !== 'IMG') {
                 nextSlide();
             }
         });
-
-        // פתרון גיבוי למקרה ששם תמונת ה-QR שונה בגיטהאב
-        const qrImage = document.getElementById('qr-img');
-        qrImage.onerror = function() {
-            this.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://mayorixbusiness-collab.github.io/mayorix-presentation/';
-        };
     </script>
 </body>
 </html>
