@@ -215,39 +215,56 @@
             border: 5px solid var(--bg-dark);
         }
 
-        .qr-section {
+        /* NEW CLOSING SECTION STYLE */
+        .closing-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 80px;
-            margin-top: 40px;
+            gap: 50px;
+            margin-top: 30px;
         }
 
-        .qr-box {
-            background: #fff;
-            padding: 25px;
-            border-radius: 30px;
-            box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
-        }
-
-        .qr-box img {
-            width: 300px;
-            height: 300px;
-            display: block;
-        }
-
-        .contact-info {
-            text-align: right;
+        .contact-grid-final {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
         }
 
         .contact-item {
             font-size: 38px;
-            margin-bottom: 30px;
             color: #fff;
         }
 
         .contact-item i {
             color: var(--accent-cyan);
-            margin-left: 20px;
+            margin-left: 15px;
+        }
+
+        /* PREMIUM WEBSITE BUTTON */
+        .web-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 60px;
+            font-size: 35px;
+            font-weight: 700;
+            font-family: 'Heebo', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            background: var(--gradient-primary);
+            border-radius: 50px;
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .web-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(157, 78, 221, 0.6);
+        }
+
+        .web-button i {
+            font-size: 40px;
         }
 
         /* 5. NAVIGATION DOTS */
@@ -279,6 +296,7 @@
 
 <div class="presentation-wrapper" id="presentation">
     
+    <!-- שקופית 1 -->
     <div class="slide-container active" id="slide1">
         <h1 class="hero-title gradient-text">Mayorix</h1>
         <p class="hero-subtitle">פיתוח אתרים | אוטומציות | <b>סוכני AI לעסקים</b></p>
@@ -287,6 +305,7 @@
         </p>
     </div>
 
+    <!-- שקופית 2 -->
     <div class="slide-container" id="slide2">
         <h2 class="slide-title"><span>למה עסקים מאבדים לקוחות?</span></h2>
         <div class="content-grid">
@@ -313,6 +332,7 @@
         </div>
     </div>
 
+    <!-- שקופית 3 -->
     <div class="slide-container" id="slide3">
         <h2 class="slide-title"><span>הפתרון: סוכן אוטונומי 24/7</span></h2>
         <div style="max-width: 1000px; text-align: center; background: rgba(0,210,255,0.05); padding: 60px; border-radius: 40px; border: 1px solid var(--border-glow);">
@@ -324,6 +344,7 @@
         </div>
     </div>
 
+    <!-- שקופית 4 -->
     <div class="slide-container" id="slide4">
         <h2 class="slide-title"><span>איך זה עובד? (התהליך)</span></h2>
         <div class="pipeline">
@@ -350,6 +371,7 @@
         </div>
     </div>
 
+    <!-- שקופית 5 -->
     <div class="slide-container" id="slide5">
         <h2 class="slide-title"><span>מה אנחנו עושים ב-Mayorix?</span></h2>
         <div class="content-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1400px;">
@@ -371,6 +393,7 @@
         </div>
     </div>
 
+    <!-- שקופית 6 -->
     <div class="slide-container" id="slide6">
         <h2 class="slide-title"><span>הערך המוסף שלנו</span></h2>
         <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 900px;">
@@ -389,22 +412,25 @@
         </div>
     </div>
 
+    <!-- שקופית 7 (האחרונה עם הקישור לאתר) -->
     <div class="slide-container" id="slide7">
-        <h1 class="gradient-text" style="font-size: 100px; margin-bottom: 10px;">Mayorix</h1>
-        <div class="qr-section">
-            <div class="contact-info">
+        <h1 class="gradient-text" style="font-size: 110px; margin-bottom: 10px;">Mayorix</h1>
+        
+        <div class="closing-container">
+            <div class="contact-grid-final">
                 <div class="contact-item"><i class="fas fa-phone"></i> 053-9360150</div>
                 <div class="contact-item"><i class="fas fa-envelope"></i> mayorixbusiness@gmail.com</div>
-                <p style="font-size: 35px; color: var(--accent-cyan); font-weight: 700; margin-top: 40px;">
-                    בואו נבנה את העתיד שלכם.
-                </p>
             </div>
-            <div style="text-align: center;">
-                <div class="qr-box">
-                    <img src="qr.png" alt="Scan to visit our site">
-                </div>
-                <p style="margin-top: 20px; font-size: 24px;">סרקו למעבר לאתר החברה</p>
-            </div>
+
+            <!-- כפתור יוקרתי ומעוצב לאתר שלכם במקום הברקוד -->
+            <a href="https://mayorix1.com/" target="_blank" class="web-button">
+                <i class="fas fa-globe"></i>
+                <span>ביקור באתר החברה: mayorix1.com</span>
+            </a>
+
+            <p style="font-size: 38px; color: var(--accent-cyan); font-weight: 700; margin-top: 10px;">
+                בואו נבנה את העתיד הדיגיטלי שלכם.
+            </p>
         </div>
     </div>
 
@@ -416,7 +442,6 @@
     const dotsContainer = document.getElementById('dots');
     let currentSlide = 0;
 
-    // יצירת נקודות ניווט בתחתית
     slides.forEach((_, i) => {
         const dot = document.createElement('div');
         dot.classList.add('dot');
@@ -443,15 +468,16 @@
         showSlide(currentSlide);
     }
 
-    // הקשבה למקלדת (Enter, רווח, חצים)
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowLeft') nextSlide();
         if (e.key === 'ArrowRight') prevSlide();
     });
 
-    // הקשבה לקליק בעכבר (בכל מקום חוץ מעל התמונה)
     window.addEventListener('click', (e) => {
-        if (e.target.tagName !== 'IMG' && e.target.tagName !== 'A') {
+        // מונע מעבר שקופית רק אם לוחצים פיזית על כפתור האתר
+        if (e.target.closest('.web-button')) return;
+        
+        if (e.target.tagName !== 'A' && e.target.tagName !== 'SPAN') {
             nextSlide();
         }
     });
